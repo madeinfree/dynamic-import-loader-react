@@ -2,7 +2,7 @@
 
 flexible to custom your dynamic import component
 
-## Install
+## Installation
 
 ```
 > yarn add dynamic-import-loader-react
@@ -10,10 +10,14 @@ flexible to custom your dynamic import component
 
 ## Uses
 
-with default `loading...` component
+~~~with default `loading...` component~~~
+
+Now didn't support default Loading component,
+if you want to hide Loading component see below without Loading component.
 
 ```tsx
 <DynamicImportLoader
+  jsxElement={<div>Loading...</div>}
   fileImport={() => import('../__fixtures__/dynamicComponent')}
 />
 ```
@@ -47,6 +51,7 @@ with custom render function
 
 ```tsx
 <DynamicImportLoader
+  jsxElement={<div>Loading...</div>}
   fileImport={() => import('../__fixtures__/dynamicComponent')}
 >
   {Component => (
@@ -56,6 +61,15 @@ with custom render function
     </div>
   )}
 </DynamicImportLoader>
+```
+
+without Loading component
+
+```tsx
+<DynamicImportLoader
+  useLoading={false}
+  fileImport={() => import('../__fixtures__/dynamicComponent')}
+/>
 ```
 
 # License
