@@ -1,6 +1,6 @@
 {
   "name": "dynamic-import-loader-react",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "scripts": {
     "test": "yarn jest",
