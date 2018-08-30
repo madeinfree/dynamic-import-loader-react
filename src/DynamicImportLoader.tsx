@@ -17,14 +17,18 @@ class DynamicImportLoader extends React.Component<
   componentDidMount() {
     const { fileImport }: DynamicImportProps = this.props;
     fileImport().then((file: any) => {
-      this.setState(state => ({
+      this.setState(() => ({
         BaseInstance: file.default
       }));
     });
   }
   render() {
     const { BaseInstance } = this.state;
-    const { jsxElement, renderElement: RenderElement } = this.props;
+    const {
+      jsxElement,
+      renderElement: RenderElement,
+      useLoading = true
+    } = this.props;
     const children = this.props.children;
     if (BaseInstance) {
       if (children) {
@@ -33,13 +37,19 @@ class DynamicImportLoader extends React.Component<
         return <BaseInstance />;
       }
     } else {
-      if (jsxElement) {
-        return jsxElement;
-      } else if (RenderElement) {
-        return <RenderElement />;
+      if (!useLoading) {
+        return null;
+      } else {
+        if (jsxElement) {
+          return jsxElement;
+        } else if (RenderElement) {
+          return <RenderElement />;
+        }
+        throw new Error(
+          '[Dynamic Import Loder] should specified loading component when useLoading is not true.'
+        );
       }
     }
-    return <div>Loading...</div>;
   }
 }
 

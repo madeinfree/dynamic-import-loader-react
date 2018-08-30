@@ -21,6 +21,7 @@ describe('Dynamic Import Loader', () => {
   it('dynamicImportLoader snapshot', () => {
     const dynamicComponent = renderer.create(
       <DynamicImportLoader
+        jsxElement={<div>Loading...</div>}
         fileImport={() => import('../__fixtures__/dynamicComponent')}
       />
     );
@@ -28,13 +29,18 @@ describe('Dynamic Import Loader', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('dynamicImportLoader loading without loading props', () => {
-    const tree: ShallowWrapper = shallow(
-      <DynamicImportLoader
-        fileImport={() => import('../__fixtures__/dynamicComponent')}
-      />
-    );
-    expect(tree.find('div').text()).toEqual('Loading...');
+  it('dynamicImportLoader loading throw error without loading props', () => {
+    try {
+      shallow(
+        <DynamicImportLoader
+          fileImport={() => import('../__fixtures__/dynamicComponent')}
+        />
+      );
+    } catch (err) {
+      expect(err.message).toEqual(
+        '[Dynamic Import Loder] should specified loading component when useLoading is not true.'
+      );
+    }
   });
 
   it('dynamicImportLoader props with jsxElement', done => {
@@ -73,6 +79,7 @@ describe('Dynamic Import Loader', () => {
   it('Dynamic Import Loader render function 使用', done => {
     let tree: ReactWrapper = mount(
       <DynamicImportLoader
+        jsxElement={<div>Loading</div>}
         fileImport={() => import('../__fixtures__/dynamicComponent')}
       >
         {Component => (

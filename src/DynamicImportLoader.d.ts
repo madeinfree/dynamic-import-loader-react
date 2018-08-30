@@ -7,6 +7,7 @@ export type DynamicImportProps = {
   children?: (
     instance: React.StatelessComponent | React.ComponentClass | null
   ) => React.ReactNode;
+  useLoading?: boolean;
 };
 export type DynamicImportState = {
   BaseInstance: React.ComponentClass | React.StatelessComponent | null;
